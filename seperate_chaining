@@ -1,0 +1,160 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int a;
+
+struct Node
+{
+int key;
+int data;
+struct Node* next;
+struct Node* mainnext;
+}*New,*Head=NULL,*Tail,*Temp;
+
+void create()
+{
+int i,x,value,hash_val;
+for(i=0;i<=a;i++)
+{
+New=(struct Node*)malloc(sizeof(struct Node));
+New->data=0;
+New->next=NULL;
+New->mainnext=NULL;
+New->key=i;
+if(Head==NULL)
+{
+Head=New;
+Tail=New;
+}
+else
+{
+Tail->mainnext=New;
+Tail=New;
+}
+}
+do
+{
+printf("Enter number :");
+scanf("%d",&value);
+hash_val=value%a;
+Temp=Head;
+while(Temp->key < hash_val)
+Temp=Temp->mainnext;
+if(Temp->data==0)
+{
+Temp->data=value;
+}
+else
+{
+New=(struct Node*)malloc(sizeof(struct Node));
+New->data=value;
+New->next=NULL;
+New->mainnext=NULL;
+if(Temp->next==NULL)
+{
+Temp->next=New;
+}
+else
+{
+while(Temp->next!=NULL)
+Temp=Temp->next;
+New=(struct Node*)malloc(sizeof(struct Node));
+New->data=value;
+New->mainnext=NULL;
+New->next=NULL;
+Temp->next=New;
+}
+}
+printf("Enter 1 to continue, 2 to exit :");
+scanf("%d",&x);
+}while(x==1);
+}
+
+void search()
+{
+int num,k,pos=0;
+printf("Enter number to be searched :");
+scanf("%d",&num);
+k=num%a;
+Temp=Head;
+while(Temp->key < k)
+Temp=Temp->mainnext;
+if(Temp->data==num)
+{
+printf("Given number is in main chain of key %d position 0\n",k);
+}
+else if(Temp->next!=NULL)
+{
+while(Temp->next!=NULL)
+{
+pos = pos+1;
+if(Temp->next->data==num)
+{
+printf("Given number is in main chain of position %d, sub chain position %d\n",k,pos);
+}
+Temp=Temp->next;
+}
+}
+else
+{
+printf("Given number is not in given data\n");
+}
+}
+
+void delete()
+{
+int number,ke;
+printf("Enter number to be deleted :");
+scanf("%d",&number);
+ke=number%a;
+Temp=Head;
+while(Temp->key < ke)
+Temp=Temp->mainnext;
+if(Temp->data==number)
+{
+Temp->data=0;
+}
+else if(Temp->next!=NULL)
+{
+while(Temp->next!=NULL)
+{
+if(Temp->next->data==number)
+{
+Temp->next=Temp->next->next;
+}
+Temp=Temp->next;
+}
+}
+else
+{
+printf("Given number is not in given data\n");
+}
+}
+
+void display()
+{
+Temp=Head;
+struct Node *Temp1;
+while(Temp->key < a)
+{
+printf("%d\n",Temp->data);
+Temp1=Temp;
+while(Temp1->next!=NULL)
+{
+Temp1=Temp1->next;
+printf("%d\n",Temp1->data);
+}
+Temp=Temp->mainnext;
+}
+}
+
+int main()
+{
+printf("Enter table size :");
+scanf("%d",&a);
+create();
+search();
+delete();
+display();
+}
+//50, 700, 76, 85, 92, 73, 101.
