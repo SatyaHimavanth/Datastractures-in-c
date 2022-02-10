@@ -1,0 +1,131 @@
+#include<stdio.h>
+#include<ctype.h>
+#include<stdlib.h>
+#include<string.h>
+
+#define MAX 20
+char stack[MAX],post_fix[MAX];
+int top=-1;
+char value;
+
+void push(char value)
+{
+if(top ==MAX-1)
+printf("Overflow occured !! cannot take any input.");
+else
+{
+top++;
+stack[top] = value;
+}
+}
+
+int pop()
+{
+if(top == -1)
+printf("Underflow occured !! cannot pop any vlaue.\n");
+else
+{
+top--;
+return stack[top+1];
+}
+}
+
+int is_operator(char symbol)
+{
+if(symbol == '^' || symbol == '%' || symbol == '/' || symbol == '*' || symbol == '+' || symbol == '-')
+{
+return 1;
+}
+else
+{
+return 0;
+}
+}
+
+int precedence(char symbol)
+{
+if(symbol == '^' || symbol == '%')
+return 3;
+else if(symbol == '/' || symbol == '*')
+return 2;
+else if(symbol == '+' || symbol == '-')
+return 1;
+else
+return 0;
+}
+
+int Infix_to_Postfix(char infix_exp[], char post_fix[])
+{
+char x;
+int j=0,i=0;
+stack[0]='(';
+value = infix_exp[0];
+while(value != '\0')
+{
+value = infix_exp[i];
+
+if(value == '(')
+{
+push(value);
+}
+else if(isdigit(value) || isalpha(value))
+{
+post_fix[j]=value;
+j++;
+}
+else if(is_operator(value)==1)
+{
+if(top==-1)
+{
+push(value);
+}
+else
+{
+x=pop();
+while(is_operator(value)==1 && precedence(value)<=precedence(x) && top>=-1)
+{
+post_fix[j] = x;
+j++;
+x=pop();
+}
+push(x);
+push(value);
+}
+}
+else if(value == ')')
+{
+x=pop();
+while(x!='(')
+{
+post_fix[j]=x;
+j++;
+x=pop();
+}
+}
+else if(value == '\0')
+{
+while(top!=-1 && stack[top]!='(')
+{
+post_fix[j]=stack[top];
+top--;
+j++;
+}
+}
+else
+{
+printf("Enter only arthmatic characters\n");
+break;
+}
+i++;
+}
+}
+
+void main()
+{
+char infix[MAX];
+printf("Enter infix expersion : ");
+scanf("%s",infix);
+Infix_to_Postfix(infix,post_fix);
+printf("Post fix expression is: ");
+printf("%s",post_fix);
+}
