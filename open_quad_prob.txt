@@ -1,0 +1,162 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int a;
+
+struct node
+{
+int key;
+int data;
+struct node* next;
+}*new,*head=NULL,*tail,*temp;
+
+void create()
+{
+int i,x,value,hash_val,hash1;
+for(i=0;i<=a;i++)
+{
+new=(struct node*)malloc(sizeof(struct node));
+new->data=0;
+new->next=NULL;
+new->key=i;
+if(head==NULL)
+{
+head=new;
+tail=new;
+}
+else
+{
+tail->next=new;
+tail=new;
+}
+}
+do
+{
+printf("Enter number :");
+scanf("%d",&value);
+hash_val=value%a;
+temp=head;
+while(temp->key < hash_val)
+{
+temp=temp->next;
+}
+if(temp->data==0)
+{
+temp->data=value;
+}
+else
+{
+for(i=1;i<=a;i++)
+{
+hash1 = hash_val+(i*i);
+if(hash1 > a-1)
+{
+hash1=hash1%a;
+}
+temp=head;
+while(temp->key < hash1)
+{
+temp=temp->next;
+}
+if(temp->data==0)
+{
+temp->data=value;
+break;
+}
+}
+}
+printf("Enter 1 to continue, 2 to exit :");
+scanf("%d",&x);
+}while(x==1);
+}
+
+void search()
+{
+int num,i;
+printf("Enter number to be searched :");
+scanf("%d",&num);
+temp=head;
+while(temp->key < a)
+{
+if(temp->data == num)
+{
+printf("Given number is in given data\n");
+}
+temp=temp->next;
+}
+}
+
+int delete()
+{
+int number;
+printf("Enter number to be deleted :");
+scanf("%d",&number);
+temp=head;
+while(temp->next != NULL)
+{
+if(temp->data == number)
+temp->data=0;
+temp=temp->next;
+}
+}
+
+int display()
+{
+temp=head;
+while(temp->next != NULL)
+{
+printf("%d\n",temp->data);
+temp=temp->next;
+}
+}
+
+int insert()
+{
+int i,x,value,hash_val,hash1;
+printf("Enter number to be inserted :");
+scanf("%d",&value);
+hash_val=value%a;
+temp=head;
+while(temp->key < hash_val)
+{
+temp=temp->next;
+}
+if(temp->data==0)
+{
+temp->data=value;
+}
+else
+{
+for(i=1;i<=a;i++)
+{
+hash1 = hash_val+(i*i);
+if(hash1 > a-1)
+{
+hash1=hash1%a;
+}
+temp=head;
+while(temp->key < hash1)
+{
+temp=temp->next;
+}
+if(temp->data==0)
+{
+temp->data=value;
+break;
+}
+}
+}
+}
+
+int main()
+{
+printf("Enter table size :");
+scanf("%d",&a);
+create();
+insert();
+search();
+delete();
+display();
+}
+//qes 50, 700, 76, 85, 92, 73, 101
+//ans 700 50 85 73 101 92 76

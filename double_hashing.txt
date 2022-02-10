@@ -1,0 +1,165 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int a;
+
+struct node
+{
+int key;
+int data;
+struct node* next;
+}*new,*head=NULL,*tail,*temp;
+
+void create()
+{
+int i,x,value,hash2,hash1,ke;
+for(i=0;i<=a;i++)
+{
+new=(struct node*)malloc(sizeof(struct node));
+new->data=0;
+new->next=NULL;
+new->key=i;
+if(head==NULL)
+{
+head=new;
+tail=new;
+}
+else
+{
+tail->next=new;
+tail=new;
+}
+}
+do
+{
+printf("Enter number :");
+scanf("%d",&value);
+hash1=value%a;
+temp=head;
+while(temp->key < hash1)
+{
+temp=temp->next;
+}
+if(temp->data==0)
+{
+temp->data=value;
+}
+else
+{
+hash2=8-(value%8);
+for(i=1;i<a;i++)
+{
+ke=(hash1+i*hash2)%a;
+temp=head;
+while(temp->key < ke)
+{
+temp=temp->next;
+}
+if(temp->data==0)
+{
+temp->data=value;
+break;
+}
+}
+}
+printf("Enter 1 to continue, 2 to exit :");
+scanf("%d",&x);
+}while(x==1);
+}
+
+void insert()
+{
+int num,hash1,hash2,j,ke;
+printf("Enter number to be inserted :");
+scanf("%d",&num);
+hash1=num%a;
+temp=head;
+while(temp->key < hash1)
+{
+temp=temp->next;
+}
+if(temp->data==0)
+{
+temp->data=num;
+}
+else
+{
+hash2=7-(num%7);
+for(j=1;j<a;j++)
+{
+ke=(hash1+j*hash2)%a;
+temp=head;
+while(temp->key < ke)
+{
+temp=temp->next;
+}
+if(temp->data==0)
+{
+temp->data=num;
+break;
+}
+}
+}
+}
+
+void search()
+{
+int num,i;
+printf("Enter number to be searched :");
+scanf("%d",&num);
+temp=head;
+while(temp->key < a)
+{
+if(temp->data == num)
+{
+printf("Given number is in given data\n");
+}
+temp=temp->next;
+}
+}
+
+void delete()
+{
+int number;
+printf("Enter number to be deleted :");
+scanf("%d",&number);
+temp=head;
+while(temp->next != NULL)
+{
+if(temp->data == number)
+temp->data=0;
+temp=temp->next;
+}
+}
+
+void display()
+{
+temp=head;
+while(temp->next != NULL)
+{
+printf("%d\n",temp->data);
+temp=temp->next;
+}
+}
+
+int main()
+{
+int opt;
+printf("Enter table size :");
+scanf("%d",&a);
+create();
+printf("Enter 1 to insert, 2 to delete, 3 to search :");
+scanf("%d",&opt);
+switch(opt)
+{
+case 1:insert();
+display();
+break;
+case 2:delete();
+display();
+break;
+case 3:search();
+break;
+default:printf("Enter only given choice\n");
+}
+}
