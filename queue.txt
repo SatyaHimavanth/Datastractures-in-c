@@ -1,0 +1,116 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+#define N 25
+int DQ[N],fr=0,re=N;
+
+int enqueuefront(int x)
+{
+if(fr==0 && re=N-1 || fr=re+1)
+printf("Queue is full!!\n");
+else if(fr==0 && re==0)
+DQ[fr]=x;
+else if(fr==0)
+{
+fr=N-1;
+DQ[fr]=x;
+}
+else
+{
+fr--;
+DQ[fr]=x;
+}
+}
+
+int dequeuefront()
+{
+if(fr==0 && re==0)
+printf("Queue is empty!!\n");
+else if(fr==re)
+{
+fr=0;
+re=0;
+}
+else if(fr=N-1)
+{
+printf("%d\n",DQ[fr]);
+fr=0;
+}
+else
+{
+printf("%d\n",DQ[fr]);
+fr++;
+}
+}
+
+int enqueuerear(int x)
+{
+if(fr==0 && re==N-1 || fr=re+1)
+printf("Queue is full!!\n");
+else if(fr==0 && re==0)
+DQ[re]=x;
+else if(re==N-1)
+{
+re=0;
+DQ[re]=x;
+}
+else
+{
+re++;
+DQ[re]=x;
+}
+}
+
+int dequeuerear()
+{
+if(fr==0 && re==0)
+printf("Queue is empty!!\n");
+else if(fr==re)
+{
+fr=0;
+re=0;
+}
+else if(re==0)
+{
+printf("%d\n",DQ[re]);
+re=N-1;
+}
+else
+{
+printf("%d\n",DQ[re]);
+re--;
+}
+}
+
+int main()
+{
+int a,b,i;
+printf("Enter no of elements in Queue : ");
+scanf("%d",&a);
+printf("Enter elements in Queue :\n");
+for(i=0;i<a;i++)
+{
+printf("Enter element %d : ",i+1);
+scanf("%d",&DQ[i]);
+}
+printf("Enter 1 to enqueuefront, 2 to dequeuefront,3 to enqueuerear,4 to dequeuerear : ");
+scanf("%d",&b);
+switch(b)
+{
+case 1:enqueuefront();
+display();
+break;
+case 2:dequeuefront();
+display();
+break;
+case 3:enqueuerear();
+display();
+break;
+case 4:dequeuerear();
+display();
+break;
+default:printf("Enter only given options\n");
+}
+}
