@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<stdlib.h>
+int a;
+
+struct node{
+int data;
+struct node *prev;
+}*newnode,*head=NULL,*tail,*temp;
+
+void create(){
+int i,val;
+for(i=0;i<a;i++)
+{
+printf("Enter number %d : ",i+1);
+scanf("%d",&val);
+newnode=(struct node*)malloc(sizeof(struct node));
+newnode->prev=NULL;
+newnode->data=val;
+if(head==NULL){
+head=newnode;
+tail=newnode;
+}
+else{
+newnode->prev=head;
+head=newnode;
+}
+}
+}
+
+void push(){
+int num;
+printf("Enter number : ");
+scanf("%d",&num);
+newnode=(struct node*)malloc(sizeof(struct node));
+newnode->data=num;
+newnode->prev=NULL;
+if(head!=NULL){
+newnode->prev=head;
+head=newnode;
+}
+else{
+head=newnode;
+tail=newnode;
+}
+}
+
+void pop(){
+if(head==NULL && tail==NULL)
+printf("Stack is empty!!\n");
+else if(head==tail){
+printf("element poped is :%d\n",head->data);
+head=NULL;
+tail=NULL;
+}
+else{
+temp=head;
+head=temp->prev;
+printf("element poped is :%d\n",temp->data);
+}
+}
+
+void display(){
+temp=head;
+printf("remaining elements in stack are :\n");
+while(temp->prev!=NULL)
+{
+printf("%d\n",temp->data);
+temp=temp->prev;
+}
+printf("%d\n",temp->data);
+}
+
+void main(){
+int b,c,d=1;
+printf("Enter no of elements in stack :");
+scanf("%d",&a);
+create();
+while(d==1){
+printf("Enter 1 to push, 2 to pop :");
+scanf("%d",&c);
+switch(c){
+case 1:push();
+break;
+case 2:pop();
+break;
+default:printf("Enter only given options\n");
+}
+printf("1 to continue, 2 to end :");
+scanf("%d",&d);
+}
+display();
+}

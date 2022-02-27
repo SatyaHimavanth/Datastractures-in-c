@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#define MAX 20
+char stack[MAX],infix[MAX];
+int top=-1;
+char value;
+
+void push(char value)
+{
+if(top ==MAX-1)
+printf("Overflow occured !! cannot take any input.");
+else
+{
+top++;
+stack[top] = value;
+}
+}
+
+int pop()
+{
+if(top == -1)
+printf("Underflow occured !! cannot pop any vlaue.\n");
+else
+{
+top--;
+return stack[top+1];
+}
+}
+
+int pre(char symbol)
+{
+if(symbol == '{' || symbol == '}')
+return 3;
+else if(symbol == '(' || symbol == ')')
+return 2;
+else if(symbol == '[' || symbol == ']')
+return 1;
+else
+return 0;
+}
+
+int para_match(char infix[]){
+char x;
+int i=0,j=0;
+value = infix[0];
+while(value!='\0'){
+value=infix[i];
+if(value=='{' || value=='[' || value=='(')
+push(value);
+
+else if(value=='}' || value==']' || value==')')
+{
+x=pop();
+if(pre(x)!=pre(value))
+{
+push(x);
+push(value);
+}
+}
+i++;
+}
+}
+
+
+void main()
+{
+printf("Enter infix expersion : ");
+scanf("%s",infix);
+para_match(infix);
+if(top==-1)
+printf("Parenthesis are matching\n");
+else
+printf("Parenthesis are not matching\n");
+}

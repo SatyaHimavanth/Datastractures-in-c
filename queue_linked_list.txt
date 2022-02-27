@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<stdlib.h>
+int a;
+
+struct node{
+int data;
+struct node *next;
+}*newnode,*head=NULL,*tail,*temp;
+
+void create(){
+int i,val,x;
+for(i=0;i<a;i++)
+{
+printf("Enter number %d : ",i+1);
+scanf("%d",&val);
+newnode=(struct node*)malloc(sizeof(struct node));
+newnode->next=NULL;
+newnode->data=val;
+if(head==NULL){
+head=newnode;
+tail=newnode;
+}
+else{
+tail->next=newnode;
+tail=newnode;
+}
+}
+}
+
+void push(){
+int num;
+printf("Enter number : ");
+scanf("%d",&num);
+newnode=(struct node*)malloc(sizeof(struct node));
+newnode->data=num;
+newnode->next=NULL;
+if(tail!=NULL){
+tail->next=newnode;
+tail=newnode;
+}
+else{
+head=newnode;
+tail=newnode;
+}
+}
+
+void display(){
+temp=head;
+printf("remaining elements in Queue are :\n");
+while(temp->next!=NULL)
+{
+printf("%d\n",temp->data);
+temp=temp->next;
+}
+printf("%d\n",temp->data);
+}
+
+void pop(){
+if(head==NULL && tail==NULL)
+printf("Queue is empty!!\n");
+else if(head==tail){
+printf("element poped is :%d\n",head->data);
+head=NULL;
+tail=NULL;
+}
+else{
+temp=head;
+head=temp->next;
+printf("element poped is :%d\n",temp->data);
+}
+}
+
+void main(){
+int b,c,d=1;
+printf("Enter no of elements in Queue :");
+scanf("%d",&a);
+create();
+while(d==1){
+printf("Enter 1 to push, 2 to pop :");
+scanf("%d",&c);
+switch(c){
+case 1:push();
+break;
+case 2:pop();
+break;
+default:printf("Enter only given options\n");
+}
+printf("1 to continue, 2 to end :");
+scanf("%d",&d);
+}
+display();
+}
